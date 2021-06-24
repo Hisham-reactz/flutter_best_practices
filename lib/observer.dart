@@ -5,7 +5,6 @@ class GlobalObserver extends BlocObserver {
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
     if (bloc.state != null) {}
-    // print('${bloc.runtimeType} $event');
   }
 
   @override
