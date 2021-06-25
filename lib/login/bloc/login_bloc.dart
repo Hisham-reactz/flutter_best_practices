@@ -20,7 +20,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield _mapPasswordChangedToState(event, state);
     } else if (event is LoginSubmitted) {
       yield* _mapLoginSubmittedToState(event, state);
+    } else if (event is KeyboardOpen) {
+      yield _mapKeyboardOpenedToState(event, state);
     }
+  }
+
+  LoginState _mapKeyboardOpenedToState(
+    KeyboardOpen event,
+    LoginState state,
+  ) {
+    final keyboard = event.keyboard;
+    return state.copyWith(
+      keyboard: keyboard,
+      status: 'false',
+    );
   }
 
   LoginState _mapUsernameChangedToState(
@@ -30,7 +43,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final username = event.username;
     return state.copyWith(
       username: username,
-      status: state.password.isNotEmpty && username.isNotEmpty,
+      status: 'false',
     );
   }
 
@@ -41,7 +54,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final password = event.password;
     return state.copyWith(
       password: password,
-      status: state.password.isNotEmpty && state.username.isNotEmpty,
+      status: 'false',
     );
   }
 
@@ -49,17 +62,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginSubmitted event,
     LoginState state,
   ) async* {
-    if (state.status) {
-      yield state.copyWith(status: false);
+    if (state.password.isNotEmpty && state.username.isNotEmpty) {
+      yield state.copyWith(status: 'pending');
       try {
         // DUMMY API TO BE REPLACED BY REAL ONE IN _authenticationModel
         await _authenticationModel.logIn(
           username: state.username,
           password: state.password,
         );
-        yield state.copyWith(status: true);
+        yield state.copyWith(status: 'true');
       } on Exception catch (_) {
-        yield state.copyWith(status: false);
+        yield state.copyWith(status: 'false');
       }
     }
   }

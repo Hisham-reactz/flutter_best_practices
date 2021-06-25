@@ -25,6 +25,15 @@ class LoginPasswordChanged extends LoginEvent {
   List<Object> get props => [password];
 }
 
+class KeyboardOpen extends LoginEvent {
+  const KeyboardOpen(this.keyboard);
+
+  final bool keyboard;
+
+  @override
+  List<Object> get props => [keyboard];
+}
+
 class LoginSubmitted extends LoginEvent {
   const LoginSubmitted();
 }
