@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../register/register.dart';
 import '../../bloc/login_bloc.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    void _openMyPage() async {
+      await Navigator.push<void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => const RegisterPage(),
+        ),
+      );
+    }
+
     raisedButtonStyle(dynamic type) => ElevatedButton.styleFrom(
           onPrimary: Colors.white,
           primary:
@@ -40,7 +50,9 @@ class LoginButton extends StatelessWidget {
                   key: const Key('register_raisedButton'),
                   style: raisedButtonStyle(1),
                   child: const Text('Sign Up'),
-                  onPressed: () {},
+                  onPressed: () async {
+                    _openMyPage();
+                  },
                 )
               ]);
       },
