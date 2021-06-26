@@ -14,7 +14,9 @@ class PasswordInput extends StatelessWidget {
     });
     final _nodeText2 = FocusNode();
     return BlocBuilder<LoginBloc, LoginState>(
-      buildWhen: (previous, current) => previous.password != current.password,
+      buildWhen: (previous, current) =>
+          previous.password != current.password ||
+          current.status == 'validation_error',
       builder: (context, state) {
         return SizedBox(
             width: MediaQuery.of(context).size.width / 1.2,
@@ -34,9 +36,10 @@ class PasswordInput extends StatelessWidget {
               obscureText: true,
               keyboardAppearance: Brightness.dark,
               decoration: InputDecoration(
-                errorText: state.password.isEmpty && state.status == 'pending'
-                    ? 'invalid username'
-                    : null,
+                errorText:
+                    state.password.isEmpty && state.status == 'validation_error'
+                        ? 'invalid username'
+                        : null,
                 enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Color(0xFFEAEEF7)),
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),

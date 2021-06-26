@@ -13,7 +13,9 @@ class UsernameInput extends StatelessWidget {
     });
     final _nodeText1 = FocusNode();
     return BlocBuilder<LoginBloc, LoginState>(
-      buildWhen: (previous, current) => previous.username != current.username,
+      buildWhen: (previous, current) =>
+          previous.username != current.username ||
+          current.status == 'validation_error',
       builder: (context, state) {
         return SizedBox(
             width: MediaQuery.of(context).size.width / 1.2,
@@ -40,9 +42,10 @@ class UsernameInput extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
                 fillColor: const Color(0xFFEAEEF7),
                 filled: true,
-                errorText: state.username.isEmpty && state.status == 'pending'
-                    ? 'invalid username'
-                    : null,
+                errorText:
+                    state.username.isEmpty && state.status == 'validation_error'
+                        ? 'invalid username'
+                        : null,
               ),
             ));
       },

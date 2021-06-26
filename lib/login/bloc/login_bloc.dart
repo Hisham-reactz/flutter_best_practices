@@ -74,6 +74,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } on Exception catch (_) {
         yield state.copyWith(status: 'false');
       }
+    } else {
+      yield state.copyWith(status: 'validation_error');
     }
   }
 }

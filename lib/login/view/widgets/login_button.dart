@@ -26,7 +26,8 @@ class LoginButton extends StatelessWidget {
                   key: const Key('loginForm_continue_raisedButton'),
                   style: raisedButtonStyle(0),
                   child: const Text('Sign In'),
-                  onPressed: state.status == 'false'
+                  onPressed: ['validation_error', 'false']
+                          .contains(state.status)
                       ? () {
                           context.read<LoginBloc>().add(const LoginSubmitted());
                         }
