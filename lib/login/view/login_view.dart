@@ -21,11 +21,9 @@ class LoginForm extends StatelessWidget {
     ScrollController _scrollctrl;
     _scrollctrl = ScrollController();
     _scrollctrl.addListener(() {
-      _scrollctrl.position.moveTo(
-          statz.state.keyboard == true ? height(context) : 00.00,
-          duration:
-              Duration(milliseconds: statz.state.keyboard == true ? 300 : 0),
-          clamp: true);
+      final bottom = MediaQuery.of(context).viewInsets.bottom;
+      _scrollctrl.position.moveTo(bottom > 0 ? bottom : 00.00,
+          duration: const Duration(milliseconds: 300), clamp: true);
     });
 
     Color getColor(Set<MaterialState> states) {

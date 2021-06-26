@@ -7,11 +7,6 @@ class PasswordInput extends StatelessWidget {
   const PasswordInput({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    TextEditingController _passctrl;
-    _passctrl = TextEditingController();
-    _passctrl.addListener(() {
-      context.read<LoginBloc>().add(const KeyboardOpen(true));
-    });
     final _nodeText2 = FocusNode();
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) =>
@@ -22,14 +17,10 @@ class PasswordInput extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 1.2,
             child: TextField(
               focusNode: _nodeText2,
-              controller: _passctrl,
               onEditingComplete: () {
-                context.read<LoginBloc>().add(const KeyboardOpen(false));
                 Timer(const Duration(milliseconds: 100), _nodeText2.unfocus);
               },
-              onSubmitted: (d) {
-                context.read<LoginBloc>().add(const KeyboardOpen(false));
-              },
+              onSubmitted: (d) {},
               key: const Key('loginForm_passwordInput_textField'),
               onChanged: (password) =>
                   context.read<LoginBloc>().add(LoginPasswordChanged(password)),

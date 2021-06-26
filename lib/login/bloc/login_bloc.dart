@@ -20,20 +20,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield _mapPasswordChangedToState(event, state);
     } else if (event is LoginSubmitted) {
       yield* _mapLoginSubmittedToState(event, state);
-    } else if (event is KeyboardOpen) {
-      yield _mapKeyboardOpenedToState(event, state);
     }
-  }
-
-  LoginState _mapKeyboardOpenedToState(
-    KeyboardOpen event,
-    LoginState state,
-  ) {
-    final keyboard = event.keyboard;
-    return state.copyWith(
-      keyboard: keyboard,
-      status: 'false',
-    );
   }
 
   LoginState _mapUsernameChangedToState(

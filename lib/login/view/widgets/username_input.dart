@@ -6,11 +6,6 @@ class UsernameInput extends StatelessWidget {
   const UsernameInput({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    TextEditingController _unamectrl;
-    _unamectrl = TextEditingController();
-    _unamectrl.addListener(() {
-      context.read<LoginBloc>().add(const KeyboardOpen(true));
-    });
     final _nodeText1 = FocusNode();
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) =>
@@ -21,14 +16,8 @@ class UsernameInput extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 1.2,
             child: TextField(
               focusNode: _nodeText1,
-              onEditingComplete: () {
-                context.read<LoginBloc>().add(const KeyboardOpen(false));
-                _nodeText1.nextFocus();
-              },
-              onSubmitted: (d) {
-                context.read<LoginBloc>().add(const KeyboardOpen(false));
-              },
-              controller: _unamectrl,
+              onEditingComplete: _nodeText1.nextFocus,
+              onSubmitted: (d) {},
               key: const Key('loginForm_usernameInput_textField'),
               keyboardAppearance: Brightness.dark,
               keyboardType: TextInputType.name,
