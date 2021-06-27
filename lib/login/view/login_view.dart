@@ -13,7 +13,10 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    snackBar(String msg) => SnackBar(content: Text(msg));
+    snackBar(String msg) async {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+    }
+
     void _openMyPage() async {
       await Navigator.push<void>(
         context,
@@ -31,22 +34,21 @@ class LoginForm extends StatelessWidget {
       case 'timeout':
         {
           Future.delayed(Duration.zero, () {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(snackBar('API Timeout Please Try Later'));
+            snackBar('API Timeout Please Try Later');
           });
         }
         break;
       case 'login_true':
         {
           statz.close();
+          snackBar('Logged In');
           Future.delayed(Duration.zero, _openMyPage);
         }
         break;
       case 'login_false':
         {
           Future.delayed(Duration.zero, () {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(snackBar('Invalid Login'));
+            snackBar('Invalid Login');
           });
         }
         break;
