@@ -1,5 +1,21 @@
 part of '../register_view.dart';
 
+List<String> inputs = [
+  'Shop Name',
+  'Password',
+  'Password Confirmation',
+  'State',
+  'Pin Code',
+  'Email ID',
+  'District',
+  'Street',
+  'Phone Number',
+  'Country',
+  'City',
+  'About Shop',
+];
+List<Widget> inputList = [];
+
 Widget textInput(dynamic data) => TextFormField(
       key: Key(data.toString()),
       textInputAction:
@@ -36,28 +52,9 @@ Widget textInput(dynamic data) => TextFormField(
 Widget paddingz = const SizedBox(
   height: 12,
 );
-List<Widget> inputList = [
-  textInput('Shop Name'),
-  paddingz,
-  textInput('Password'),
-  paddingz,
-  textInput('Password Confirmation'),
-  paddingz,
-  textInput('State'),
-  paddingz,
-  textInput('Pin Code'),
-  paddingz,
-  textInput('Email ID'),
-  paddingz,
-  textInput('District'),
-  paddingz,
-  textInput('Street'),
-  paddingz,
-  textInput('Phone Number'),
-  paddingz,
-  textInput('Country'),
-  paddingz,
-  textInput('City'),
-  paddingz,
-  textInput('About Shop'),
-];
+
+void getInputs() {
+  inputs
+      .map<dynamic>((e) => inputList.addAll([textInput(e), paddingz]))
+      .toList();
+}

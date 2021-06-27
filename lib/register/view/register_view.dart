@@ -6,6 +6,7 @@ class RegisterView extends StatelessWidget {
   const RegisterView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    getInputs();
     double height(BuildContext context) => MediaQuery.of(context).size.height;
     double width(BuildContext context) => MediaQuery.of(context).size.width;
     return MaterialApp(
