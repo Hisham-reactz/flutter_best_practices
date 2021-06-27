@@ -1,29 +1,25 @@
 import 'dart:async';
 
-enum AuthenticationStatus { unknown, authenticated, unauthenticated }
+dynamic loginStat = 'false';
 
 class AuthModel {
-  final _controller = StreamController<AuthenticationStatus>();
-
-  Stream<AuthenticationStatus> get status async* {
+  Future<dynamic> status() async {
     await Future<void>.delayed(const Duration(seconds: 1));
-    yield AuthenticationStatus.unauthenticated;
-    yield* _controller.stream;
+    return loginStat;
   }
 
   Future<void> logIn({
     required String username,
     required String password,
   }) async {
-    await Future.delayed(
-      const Duration(seconds: 5),
-      () => _controller.add(AuthenticationStatus.authenticated),
-    );
+    await Future.delayed(const Duration(seconds: 2), () {
+      setLogin(password.length > 5);
+    });
   }
 
-  void logOut() {
-    _controller.add(AuthenticationStatus.unauthenticated);
-  }
+  void setLogin(dynamic statz) async => loginStat = statz;
 
-  void dispose() => _controller.close();
+  void logOut() => setLogin('false');
+
+  void dispose() => setLogin('false');
 }

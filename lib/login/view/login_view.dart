@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_best_practices/register/register.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +13,7 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    snackBar(String msg) => SnackBar(content: Text(msg));
     void _openMyPage() async {
       await Navigator.push<void>(
         context,
@@ -26,10 +26,34 @@ class LoginForm extends StatelessWidget {
     }
 
     var statz = context.watch<LoginBloc>();
-    if (statz.state.status == 'true') {
-      statz.close();
-      Future.delayed(Duration.zero, _openMyPage);
+
+    switch (statz.state.status) {
+      case 'timeout':
+        {
+          Future.delayed(Duration.zero, () {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(snackBar('API Timeout Please Try Later'));
+          });
+        }
+        break;
+      case 'login_true':
+        {
+          statz.close();
+          Future.delayed(Duration.zero, _openMyPage);
+        }
+        break;
+      case 'login_false':
+        {
+          Future.delayed(Duration.zero, () {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(snackBar('Invalid Login'));
+          });
+        }
+        break;
+      default:
+        break;
     }
+
     double height(BuildContext context) => MediaQuery.of(context).size.height;
 
     double width(BuildContext context) => MediaQuery.of(context).size.width;

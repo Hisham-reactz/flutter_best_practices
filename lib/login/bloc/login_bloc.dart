@@ -1,8 +1,12 @@
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../data/auth.dart';
 part 'login_event.dart';
 part 'login_state.dart';
+
+dynamic timer = 'dead';
+int i = 0;
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({
@@ -53,11 +57,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield state.copyWith(status: 'pending');
       try {
         // DUMMY API TO BE REPLACED BY REAL ONE IN _authenticationModel
-        await _authenticationModel.logIn(
-          username: state.username,
-          password: state.password,
-        );
-        yield state.copyWith(status: 'true');
+        //Login API debounce
+        if (timer == 'dead') {
+          i++;
+          timer = i > 5 ? Timer(const Duration(minutes: 1), () {}) : 'dead';
+          await _authenticationModel.logIn(
+            username: state.username,
+            password: state.password,
+          );
+          dynamic statr = await AuthModel().status();
+          yield state.copyWith(status: 'login_$statr');
+        } else {
+          if (timer.isActive == true) {
+            yield state.copyWith(status: 'timeout');
+          } else {
+            timer.cancel();
+            timer = 'dead';
+            i = 0;
+            yield state.copyWith(status: 'false');
+          }
+        }
       } on Exception catch (_) {
         yield state.copyWith(status: 'false');
       }
