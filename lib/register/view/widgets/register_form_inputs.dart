@@ -54,6 +54,7 @@ Widget paddingz = const SizedBox(
 );
 
 void getInputs() {
+  inputList.clear();
   inputs
       .map<dynamic>((e) => inputList.addAll([textInput(e), paddingz]))
       .toList();
