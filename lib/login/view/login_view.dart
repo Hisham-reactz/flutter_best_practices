@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_best_practices/register/register.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/login_bloc.dart';
 import 'widgets/login_button.dart';
@@ -12,24 +14,35 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Bloc statz = context.watch<LoginBloc>();
+    void _openMyPage() async {
+      await Navigator.push<void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) {
+            return const RegisterPage();
+          },
+        ),
+      );
+    }
+
+    var statz = context.watch<LoginBloc>();
     if (statz.state.status == 'true') {
       statz.close();
+      Future.delayed(Duration.zero, _openMyPage);
     }
     double height(BuildContext context) => MediaQuery.of(context).size.height;
+
     double width(BuildContext context) => MediaQuery.of(context).size.width;
+
     var rememberUser = true;
-    ScrollController _scrollctrl;
-    _scrollctrl = ScrollController();
+    var _scrollctrl = ScrollController();
     _scrollctrl.addListener(() {
       final bottom = MediaQuery.of(context).viewInsets.bottom;
       _scrollctrl.position.moveTo(bottom > 0 ? bottom : 00.00,
           duration: const Duration(milliseconds: 300), clamp: true);
     });
 
-    Color getColor(Set<MaterialState> states) {
-      return const Color(0xFF1A3B68);
-    }
+    Color getColor(Set<MaterialState> states) => const Color(0xFF1A3B68);
 
     return Scaffold(
         appBar: AppBar(

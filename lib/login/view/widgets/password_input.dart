@@ -18,7 +18,8 @@ class PasswordInput extends StatelessWidget {
             child: TextField(
               focusNode: _nodeText2,
               onEditingComplete: () {
-                Timer(const Duration(milliseconds: 100), _nodeText2.unfocus);
+                Future.delayed(
+                    const Duration(milliseconds: 100), _nodeText2.unfocus);
               },
               onSubmitted: (d) {},
               key: const Key('loginForm_passwordInput_textField'),
