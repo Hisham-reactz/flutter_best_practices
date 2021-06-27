@@ -6,6 +6,7 @@ class RegisterView extends StatelessWidget {
   const RegisterView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
     getInputs();
     double height(BuildContext context) => MediaQuery.of(context).size.height;
     double width(BuildContext context) => MediaQuery.of(context).size.width;
@@ -67,9 +68,11 @@ class RegisterView extends StatelessWidget {
                       child: Padding(
                           padding: const EdgeInsets.all(17),
                           child: Form(
+                            key: formKey,
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: inputList + [regButton(context)]),
+                                children:
+                                    inputList + [regButton(context, formKey)]),
                           )))),
             ]),
           ),

@@ -12,13 +12,16 @@ ButtonStyle raisedButtonStyle(BuildContext context) {
   );
 }
 
-Widget regButton(BuildContext context) {
+Widget regButton(BuildContext context, GlobalKey<FormState> key) {
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
         key: const Key('register_raisedButton_done'),
         style: raisedButtonStyle(context),
         child: const Text('Sign Up'),
-        onPressed: () {},
+        onPressed: () {
+          var validated = key.currentState!.validate();
+          if (validated) {}
+        },
       ));
 }
