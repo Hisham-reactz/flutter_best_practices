@@ -95,47 +95,42 @@ class LoginForm extends StatelessWidget {
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                const UsernameInput(),
-                                const Padding(padding: EdgeInsets.all(12)),
-                                const PasswordInput(),
-                                Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Checkbox(
-                                        checkColor: Colors.white,
-                                        fillColor:
-                                            MaterialStateProperty.resolveWith(
-                                                getColor),
-                                        value: rememberUser,
-                                        onChanged: (bool? value) {
-                                          rememberUser = value!;
-                                        },
-                                      ),
-                                      const Text('Remember Me'),
-                                      const Text('|'),
-                                      TextButton(
-                                          onPressed: () {},
-                                          child: const Text('Forgot Password'))
-                                    ]),
-                                const Padding(padding: EdgeInsets.all(12)),
-                                const LoginButton(),
-                                SizedBox(
-                                  height: [
-                                    'timeout',
-                                    'login_true',
-                                    'login_false'
-                                  ].contains(state.status)
-                                      ? 13
-                                      : 0,
-                                ),
-                                ['timeout', 'login_true', 'login_false']
-                                        .contains(state.status)
-                                    ? Text(state.status)
-                                    : const SizedBox.shrink()
-                              ],
+                                    const UsernameInput(),
+                                    const Padding(padding: EdgeInsets.all(12)),
+                                    const PasswordInput(),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Checkbox(
+                                            checkColor: Colors.white,
+                                            fillColor: MaterialStateProperty
+                                                .resolveWith(getColor),
+                                            value: rememberUser,
+                                            onChanged: (bool? value) {
+                                              rememberUser = value!;
+                                            },
+                                          ),
+                                          const Text('Remember Me'),
+                                          const Text('|'),
+                                          TextButton(
+                                              onPressed: () {},
+                                              child:
+                                                  const Text('Forgot Password'))
+                                        ]),
+                                    const Padding(padding: EdgeInsets.all(12)),
+                                    const LoginButton(),
+                                  ] +
+                                  statusMsg(state),
                             ));
                       })
                 ]))));
+  }
+
+  List<Widget> statusMsg(LoginState state) {
+    if (['timeout', 'login_true', 'login_false'].contains(state.status)) {
+      return [const SizedBox(height: 13), Text(state.status)];
+    }
+    return [];
   }
 }
