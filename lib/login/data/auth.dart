@@ -1,8 +1,7 @@
 import 'dart:async';
 
-dynamic loginStat = 'false';
-
 class AuthModel {
+  String loginStat = 'false';
   Future<dynamic> status() async {
     await Future<void>.delayed(const Duration(seconds: 1));
     return loginStat;
@@ -17,7 +16,7 @@ class AuthModel {
     });
   }
 
-  void setLogin(dynamic statz) async => loginStat = statz;
+  void setLogin(dynamic statz) async => loginStat = statz.toString();
 
   void logOut() => setLogin('false');
 

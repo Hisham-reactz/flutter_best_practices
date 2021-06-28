@@ -13,10 +13,6 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    snackBar(String msg) async {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
-    }
-
     void _openMyPage() async {
       await Navigator.push<void>(
         context,
@@ -26,34 +22,6 @@ class LoginForm extends StatelessWidget {
           },
         ),
       );
-    }
-
-    var statz = context.watch<LoginBloc>();
-
-    switch (statz.state.status) {
-      case 'timeout':
-        {
-          Future.delayed(Duration.zero, () {
-            snackBar('API Timeout Please Try Later');
-          });
-        }
-        break;
-      case 'login_true':
-        {
-          statz.close();
-          snackBar('Logged In');
-          Future.delayed(Duration.zero, _openMyPage);
-        }
-        break;
-      case 'login_false':
-        {
-          Future.delayed(Duration.zero, () {
-            snackBar('Invalid Login');
-          });
-        }
-        break;
-      default:
-        break;
     }
 
     double height(BuildContext context) => MediaQuery.of(context).size.height;
@@ -117,6 +85,9 @@ class LoginForm extends StatelessWidget {
                       buildWhen: (previous, current) =>
                           previous.status != current.status,
                       builder: (context, state) {
+                        if (state.status == 'true') {
+                          Future.delayed(Duration.zero, _openMyPage);
+                        }
                         return Padding(
                             padding: EdgeInsets.only(
                                 left: width(context) / 27,
@@ -149,6 +120,19 @@ class LoginForm extends StatelessWidget {
                                     ]),
                                 const Padding(padding: EdgeInsets.all(12)),
                                 const LoginButton(),
+                                SizedBox(
+                                  height: [
+                                    'timeout',
+                                    'login_true',
+                                    'login_false'
+                                  ].contains(state.status)
+                                      ? 13
+                                      : 0,
+                                ),
+                                ['timeout', 'login_true', 'login_false']
+                                        .contains(state.status)
+                                    ? Text(state.status)
+                                    : const SizedBox.shrink()
                               ],
                             ));
                       })

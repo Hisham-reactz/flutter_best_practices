@@ -15,6 +15,7 @@ dependencies:
   #add dart packages here
   flutter_bloc: ^7.0.0
   equatable: ^2.0.3
+  rxdart: ^0.27.1
 
 dev_dependencies:
   flutter_lints: ^1.0.3
