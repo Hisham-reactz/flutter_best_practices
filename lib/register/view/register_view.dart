@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 part 'widgets/register_buttons.dart';
 part 'widgets/register_form_inputs.dart';
+part 'widgets/register_image_input.dart';
 
 class RegisterView extends StatelessWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -71,8 +72,14 @@ class RegisterView extends StatelessWidget {
                             key: formKey,
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children:
-                                    inputList + [regButton(context, formKey)]),
+                                children: [
+                                      imageInput(context),
+                                      const SizedBox(
+                                        height: 13,
+                                      )
+                                    ] +
+                                    inputList +
+                                    [regButton(context, formKey)]),
                           )))),
             ]),
           ),
