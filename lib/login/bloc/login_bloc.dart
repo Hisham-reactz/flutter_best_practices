@@ -54,7 +54,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield state.copyWith(status: 'pending');
       try {
         // DUMMY API TO BE REPLACED BY REAL ONE IN _authenticationModel
-        //Login API debounce
+        //Login API debounce // *#$@$#stream*
         if (timer == null) {
           i++;
           if (i > 5) timer = Timer(const Duration(minutes: 1), () {});
