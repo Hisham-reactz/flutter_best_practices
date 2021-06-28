@@ -74,7 +74,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             username: state.username,
             password: state.password,
           );
-          dynamic _statr = await AuthModel().status();
+          dynamic _statr = await _authenticationModel.status();
           yield state.copyWith(status: 'login_$_statr');
         }
       } on Exception catch (_) {
