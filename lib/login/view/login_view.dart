@@ -85,7 +85,7 @@ class LoginForm extends StatelessWidget {
                       buildWhen: (previous, current) =>
                           previous.status != current.status,
                       builder: (context, state) {
-                        if (state.status == 'true') {
+                        if (state.status == 'login_true') {
                           Future.delayed(Duration.zero, _openMyPage);
                         }
                         return Padding(
