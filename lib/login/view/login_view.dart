@@ -73,11 +73,11 @@ class LoginForm extends StatelessWidget {
                     'AUCTION TITLE',
                     style: TextStyle(
                         color: const Color(0xFF1A3B68),
-                        fontSize: context.diagonalInches * 5),
+                        fontSize: context.diagonalInches * 3),
                   ),
                   const Text('SUB TITLE'),
                   SizedBox(
-                    height: height(context, .03),
+                    height: height(context, .05),
                   ),
                   BlocBuilder<LoginBloc, LoginState>(
                       buildWhen: (previous, current) =>
@@ -117,7 +117,7 @@ class LoginForm extends StatelessWidget {
                                               width: width(context, .3),
                                               child: const Text('Remember |')),
                                           SizedBox(
-                                              width: width(context, .5),
+                                              width: width(context, .4),
                                               child: TextButton(
                                                   onPressed: () {},
                                                   child: const Text(
@@ -133,7 +133,7 @@ class LoginForm extends StatelessWidget {
 
   List<Widget> statusMsg(LoginState state, BuildContext context) {
     if (['timeout', 'login_true', 'login_false'].contains(state.status)) {
-      return [SizedBox(height: context.heightPct(.005)), Text(state.status)];
+      return [SizedBox(height: context.heightPct(.01)), Text(state.status)];
     }
     return [];
   }

@@ -18,10 +18,12 @@ Widget imageInput(BuildContext context) {
                 Icons.add_a_photo_outlined,
                 size: 37,
               ))
-          : Image.file(
-              File(_pickedFile1),
-              fit: BoxFit.cover,
-            ),
+          : Expanded(
+              flex: 1,
+              child: Image.file(
+                File(_pickedFile1),
+                fit: BoxFit.contain,
+              )),
       const VerticalDivider(),
       _pickedFile2.isEmpty
           ? IconButton(
@@ -34,10 +36,12 @@ Widget imageInput(BuildContext context) {
                 Icons.add_a_photo_outlined,
                 size: 37,
               ))
-          : Image.file(
-              File(_pickedFile2),
-              fit: BoxFit.cover,
-            )
+          : Expanded(
+              flex: 1,
+              child: Image.file(
+                File(_pickedFile2),
+                fit: BoxFit.contain,
+              ))
     ]),
     height: context.heightPct(0.2),
     decoration: const BoxDecoration(

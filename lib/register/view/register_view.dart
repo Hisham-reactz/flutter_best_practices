@@ -43,9 +43,9 @@ class RegisterView extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   child: Container(
                     color: const Color(0xFF1A3B68),
-                    height: height(context, .15),
+                    height: height(context, .10),
                     child: Padding(
-                        padding: EdgeInsets.only(left: width(context, .005)),
+                        padding: EdgeInsets.only(left: width(context, .01)),
                         child: ListTile(
                           title: const Text(
                             'Leading',
@@ -55,7 +55,7 @@ class RegisterView extends StatelessWidget {
                             'Register Your Shop',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: (context.diagonalPx / 100) * 3),
+                                fontSize: context.diagonalInches * 3),
                           ),
                           trailing: const IconButton(
                               onPressed: null,

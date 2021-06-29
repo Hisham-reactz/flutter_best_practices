@@ -49,7 +49,7 @@ class LoginButton extends StatelessWidget {
                         }
                       : null,
                 ),
-                SizedBox(height: context.heightPct(0.005)),
+                SizedBox(height: context.heightPct(.01)),
                 ElevatedButton(
                   key: const Key('register_raisedButton'),
                   style: raisedButtonStyle(1),
