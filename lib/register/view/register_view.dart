@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter_best_practices/register/bloc/register_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sized_context/sized_context.dart';
 part 'widgets/register_buttons.dart';
