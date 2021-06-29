@@ -1,4 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:sized_context/sized_context.dart';
 part 'widgets/register_buttons.dart';
 part 'widgets/register_form_inputs.dart';
 part 'widgets/register_image_input.dart';
@@ -8,11 +11,13 @@ class RegisterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    getInputs();
-    double height(BuildContext context) => MediaQuery.of(context).size.height;
-    double width(BuildContext context) => MediaQuery.of(context).size.width;
+    getInputs(context);
+    double height(BuildContext context, double height) =>
+        context.heightPct(height);
+
+    double width(BuildContext context, double width) => context.widthPct(width);
     return MaterialApp(
-        title: 'Welcome to Flutter',
+        title: 'Register your shop',
         home: Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -38,20 +43,21 @@ class RegisterView extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   child: Container(
                     color: const Color(0xFF1A3B68),
-                    width: width(context),
-                    height: height(context) / 10,
+                    height: height(context, .15),
                     child: Padding(
-                        padding: EdgeInsets.only(left: width(context) / 20),
-                        child: const ListTile(
-                          title: Text(
+                        padding: EdgeInsets.only(left: width(context, .005)),
+                        child: ListTile(
+                          title: const Text(
                             'Leading',
                             style: TextStyle(color: Colors.white),
                           ),
                           subtitle: Text(
                             'Register Your Shop',
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: (context.diagonalPx / 100) * 3),
                           ),
-                          trailing: IconButton(
+                          trailing: const IconButton(
                               onPressed: null,
                               icon: Icon(
                                 Icons.search,
@@ -60,22 +66,22 @@ class RegisterView extends StatelessWidget {
                         )),
                   )),
               Padding(
-                  padding: const EdgeInsets.all(23),
+                  padding: EdgeInsets.all(context.diagonalInches * 2),
                   child: Material(
                       borderRadius: BorderRadius.circular(10),
                       type: MaterialType.card,
                       shadowColor: Colors.grey,
                       elevation: 3,
                       child: Padding(
-                          padding: const EdgeInsets.all(17),
+                          padding: EdgeInsets.all(context.diagonalInches * 4),
                           child: Form(
                             key: formKey,
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                       imageInput(context),
-                                      const SizedBox(
-                                        height: 13,
+                                      SizedBox(
+                                        height: context.heightPct(.03),
                                       )
                                     ] +
                                     inputList +

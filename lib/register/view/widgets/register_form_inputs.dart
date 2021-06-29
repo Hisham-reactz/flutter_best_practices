@@ -52,13 +52,12 @@ Widget textInput(dynamic data) {
   );
 }
 
-Widget paddingz = const SizedBox(
-  height: 12,
-);
+Widget paddingz(double ht) => SizedBox(height: ht);
 
-Future<void> getInputs() async {
+Future<void> getInputs(BuildContext context) async {
   inputList.clear();
   inputs
-      .map<dynamic>((e) => inputList.addAll([textInput(e), paddingz]))
+      .map<dynamic>((e) =>
+          inputList.addAll([textInput(e), paddingz(context.heightPct(.03))]))
       .toList();
 }

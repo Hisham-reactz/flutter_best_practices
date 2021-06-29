@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sized_context/sized_context.dart';
+
 import '../../../register/register.dart';
 import '../../bloc/login_bloc.dart';
 
@@ -20,8 +22,8 @@ class LoginButton extends StatelessWidget {
           onPrimary: Colors.white,
           primary:
               type == 0 ? const Color(0xFF1A3B68) : const Color(0xFF5567B3),
-          minimumSize: Size(MediaQuery.of(context).size.width / 1.2, 50),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          minimumSize: Size(context.widthPct(0.8), context.widthPct(0.13)),
+          padding: EdgeInsets.symmetric(horizontal: context.diagonalInches),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
@@ -47,9 +49,7 @@ class LoginButton extends StatelessWidget {
                         }
                       : null,
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 50,
-                ),
+                SizedBox(height: context.heightPct(0.005)),
                 ElevatedButton(
                   key: const Key('register_raisedButton'),
                   style: raisedButtonStyle(1),

@@ -4,8 +4,7 @@ ButtonStyle raisedButtonStyle(BuildContext context) {
   return ElevatedButton.styleFrom(
     onPrimary: Colors.white,
     primary: const Color(0xFF5567B3),
-    minimumSize: Size(MediaQuery.of(context).size.width / 1.2, 50),
-    padding: const EdgeInsets.symmetric(horizontal: 16),
+    minimumSize: Size(context.widthPct(0.8), context.widthPct(0.13)),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),
     ),
@@ -13,15 +12,13 @@ ButtonStyle raisedButtonStyle(BuildContext context) {
 }
 
 Widget regButton(BuildContext context, GlobalKey<FormState> key) {
-  return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: ElevatedButton(
-        key: const Key('register_raisedButton_done'),
-        style: raisedButtonStyle(context),
-        child: const Text('Sign Up'),
-        onPressed: () {
-          var validated = key.currentState!.validate();
-          if (validated) {}
-        },
-      ));
+  return ElevatedButton(
+    key: const Key('register_raisedButton_done'),
+    style: raisedButtonStyle(context),
+    child: const Text('Sign Up'),
+    onPressed: () {
+      var validated = key.currentState!.validate();
+      if (validated) {}
+    },
+  );
 }

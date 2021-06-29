@@ -1,6 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sized_context/sized_context.dart';
+
 import '../../bloc/login_bloc.dart';
 
 class PasswordInput extends StatelessWidget {
@@ -14,7 +17,7 @@ class PasswordInput extends StatelessWidget {
           current.status == 'validation_error',
       builder: (context, state) {
         return SizedBox(
-            width: MediaQuery.of(context).size.width / 1.2,
+            width: context.widthPct(0.8),
             child: TextField(
               focusNode: _nodeText2,
               onEditingComplete: () {

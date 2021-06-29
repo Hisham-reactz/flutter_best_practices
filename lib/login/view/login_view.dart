@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_best_practices/register/register.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sized_context/sized_context.dart';
+
 import '../bloc/login_bloc.dart';
 import 'widgets/login_button.dart';
 import 'widgets/password_input.dart';
@@ -24,21 +27,17 @@ class LoginForm extends StatelessWidget {
       );
     }
 
-    double height(BuildContext context) => MediaQuery.of(context).size.height;
+    double height(BuildContext context, double height) =>
+        context.heightPct(height);
 
-    double width(BuildContext context) => MediaQuery.of(context).size.width;
+    double width(BuildContext context, double width) => context.widthPct(width);
 
     var rememberUser = true;
-    var _scrollctrl = ScrollController();
-    _scrollctrl.addListener(() {
-      final bottom = MediaQuery.of(context).viewInsets.bottom;
-      _scrollctrl.position.moveTo(bottom > 0 ? bottom : 00.00,
-          duration: const Duration(milliseconds: 300), clamp: true);
-    });
 
     Color getColor(Set<MaterialState> states) => const Color(0xFF1A3B68);
 
     return Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
           backgroundColor: const Color(0xFF1A3B68),
@@ -52,8 +51,7 @@ class LoginForm extends StatelessWidget {
         ),
         body: SafeArea(
             child: SingleChildScrollView(
-                physics: const ClampingScrollPhysics(),
-                controller: _scrollctrl,
+                padding: EdgeInsets.only(bottom: context.diagonalInches),
                 child: Column(children: [
                   Align(
                     alignment: Alignment.topCenter,
@@ -61,25 +59,25 @@ class LoginForm extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(0),
                         color: const Color(0xFF1A3B68),
-                        width: width(context),
-                        height: height(context) / 5,
+                        height: height(context, .15),
                       ),
                       Positioned(
                           child: Align(
                               alignment: Alignment.bottomCenter,
                               child: Image.asset('assets/images/gadgets.png',
-                                  width: width(context),
-                                  height: height(context) / 4,
+                                  height: height(context, .20),
                                   colorBlendMode: BlendMode.luminosity)))
                     ]),
                   ),
-                  const Text(
+                  Text(
                     'AUCTION TITLE',
-                    style: TextStyle(color: Color(0xFF1A3B68), fontSize: 23),
+                    style: TextStyle(
+                        color: const Color(0xFF1A3B68),
+                        fontSize: context.diagonalInches * 5),
                   ),
                   const Text('SUB TITLE'),
                   SizedBox(
-                    height: height(context) / 17,
+                    height: height(context, .03),
                   ),
                   BlocBuilder<LoginBloc, LoginState>(
                       buildWhen: (previous, current) =>
@@ -90,46 +88,52 @@ class LoginForm extends StatelessWidget {
                         }
                         return Padding(
                             padding: EdgeInsets.only(
-                                left: width(context) / 27,
-                                right: width(context) / 27),
+                                left: width(context, .03),
+                                right: width(context, .03)),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                     const UsernameInput(),
-                                    const Padding(padding: EdgeInsets.all(12)),
+                                    Padding(
+                                        padding: EdgeInsets.all(
+                                            context.diagonalInches * 1.5)),
                                     const PasswordInput(),
                                     Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                            MainAxisAlignment.center,
                                         children: [
-                                          Checkbox(
-                                            checkColor: Colors.white,
-                                            fillColor: MaterialStateProperty
-                                                .resolveWith(getColor),
-                                            value: rememberUser,
-                                            onChanged: (bool? value) {
-                                              rememberUser = value!;
-                                            },
-                                          ),
-                                          const Text('Remember Me'),
-                                          const Text('|'),
-                                          TextButton(
-                                              onPressed: () {},
-                                              child:
-                                                  const Text('Forgot Password'))
+                                          SizedBox(
+                                              width: width(context, .1),
+                                              child: Checkbox(
+                                                checkColor: Colors.white,
+                                                fillColor: MaterialStateProperty
+                                                    .resolveWith(getColor),
+                                                value: rememberUser,
+                                                onChanged: (bool? value) {
+                                                  rememberUser = value!;
+                                                },
+                                              )),
+                                          SizedBox(
+                                              width: width(context, .3),
+                                              child: const Text('Remember |')),
+                                          SizedBox(
+                                              width: width(context, .5),
+                                              child: TextButton(
+                                                  onPressed: () {},
+                                                  child: const Text(
+                                                      'Forgot Password')))
                                         ]),
-                                    const Padding(padding: EdgeInsets.all(12)),
                                     const LoginButton(),
                                   ] +
-                                  statusMsg(state),
+                                  statusMsg(state, context),
                             ));
                       })
                 ]))));
   }
 
-  List<Widget> statusMsg(LoginState state) {
+  List<Widget> statusMsg(LoginState state, BuildContext context) {
     if (['timeout', 'login_true', 'login_false'].contains(state.status)) {
-      return [const SizedBox(height: 13), Text(state.status)];
+      return [SizedBox(height: context.heightPct(.005)), Text(state.status)];
     }
     return [];
   }

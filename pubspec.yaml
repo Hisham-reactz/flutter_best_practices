@@ -16,6 +16,8 @@ dependencies:
   flutter_bloc: ^7.0.0
   equatable: ^2.0.3
   rxdart: ^0.27.1
+  image_picker: ^0.8.1+1
+  sized_context: ^1.0.0+1
 
 dev_dependencies:
   flutter_lints: ^1.0.3
