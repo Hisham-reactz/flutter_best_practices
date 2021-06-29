@@ -5,9 +5,6 @@ Widget imageInput(BuildContext context) {
   String? _pickedFile1 = '';
   String? _pickedFile2 = '';
 
-  var _height2 = MediaQuery.of(context).size.height;
-  var _width2 = MediaQuery.of(context).size.width;
-
   return Container(
     child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       _pickedFile1.isEmpty
@@ -42,8 +39,7 @@ Widget imageInput(BuildContext context) {
               fit: BoxFit.cover,
             )
     ]),
-    height: _height2 / 4,
-    width: _width2,
+    height: context.heightPct(0.2),
     decoration: const BoxDecoration(
       color: Color(0xFFEAEEF7),
     ),

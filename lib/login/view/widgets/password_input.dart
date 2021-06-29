@@ -33,7 +33,7 @@ class PasswordInput extends StatelessWidget {
               decoration: InputDecoration(
                 errorText:
                     state.password.isEmpty && state.status == 'validation_error'
-                        ? 'invalid username'
+                        ? 'invalid password'
                         : null,
                 enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Color(0xFFEAEEF7)),
