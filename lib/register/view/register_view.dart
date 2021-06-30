@@ -79,31 +79,39 @@ class _RegisterViewState extends State<RegisterView> {
                               )),
                         )),
                   )),
-              Padding(
-                  padding: EdgeInsets.all(context.diagonalInches * 2),
-                  child: Material(
-                      borderRadius: BorderRadius.circular(10),
-                      type: MaterialType.card,
-                      shadowColor: Colors.grey,
-                      elevation: 3,
-                      child: Padding(
-                          padding: EdgeInsets.all(context.diagonalInches * 4),
-                          child: Form(
-                            key: formKey,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                      imageInput(context),
-                                      SizedBox(
-                                        height: context.heightPct(.03),
-                                      )
-                                    ] +
-                                    inputList +
-                                    [
-                                      regButton(context,
-                                          formKey as GlobalKey<FormState>)
-                                    ]),
-                          )))),
+              BlocBuilder<RegisterBloc, RegisterState>(
+                  buildWhen: (previous, current) =>
+                      previous.image1 != current.image1 ||
+                      previous.image2 != current.image2,
+                  builder: (context, state) {
+                    return Padding(
+                        padding: EdgeInsets.all(context.diagonalInches * 2),
+                        child: Material(
+                            borderRadius: BorderRadius.circular(10),
+                            type: MaterialType.card,
+                            shadowColor: Colors.grey,
+                            elevation: 3,
+                            child: Padding(
+                                padding:
+                                    EdgeInsets.all(context.diagonalInches * 4),
+                                child: Form(
+                                  key: formKey,
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                            imageInput(context, state),
+                                            SizedBox(
+                                              height: context.heightPct(.03),
+                                            )
+                                          ] +
+                                          inputList +
+                                          [
+                                            regButton(context,
+                                                formKey as GlobalKey<FormState>)
+                                          ]),
+                                ))));
+                  }),
             ]),
           ),
         ));

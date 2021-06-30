@@ -9,6 +9,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
     if (event is ImageChanged) {
       yield _mapImageChangedToState(event, state);
+    } else if (event is RegisterShop) {
+      yield _mapRegisterShopToState(event, state);
     }
   }
 
@@ -21,6 +23,16 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     return state.copyWith(
       image1: image1,
       image2: image2,
+    );
+  }
+
+  RegisterState _mapRegisterShopToState(
+    RegisterShop event,
+    RegisterState state,
+  ) {
+    final formdata = event.formdata;
+    return state.copyWith(
+      formdata: formdata,
     );
   }
 }
