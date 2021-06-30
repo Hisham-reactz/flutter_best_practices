@@ -11,17 +11,22 @@ ButtonStyle raisedButtonStyle(BuildContext context) {
   );
 }
 
-Widget regButton(BuildContext context, GlobalKey<FormState> key) {
-  return ElevatedButton(
-    key: const Key('register_raisedButton_done'),
-    style: raisedButtonStyle(context),
-    child: const Text('Sign Up'),
-    onPressed: () {
-      var validated = key.currentState!.validate();
-      if (validated) {
-        key.currentState!.save();
-        context.read<RegisterBloc>().add(RegisterShop(inputValues));
-      }
-    },
-  );
+Widget regButton(
+    BuildContext context, GlobalKey<FormState> key, RegisterState state) {
+  return state.status == 'pending'
+      ? const CircularProgressIndicator()
+      : ElevatedButton(
+          key: const Key('register_raisedButton_done'),
+          style: raisedButtonStyle(context),
+          child: const Text('Sign Up'),
+          onPressed: () {
+            var validated = key.currentState!.validate();
+            if (validated) {
+              key.currentState!.save();
+              context
+                  .read<RegisterBloc>()
+                  .add(RegisterShop((inputValues), 'pending'));
+            }
+          },
+        );
 }

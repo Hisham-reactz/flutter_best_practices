@@ -18,10 +18,11 @@ class ImageChanged extends RegisterEvent {
 }
 
 class RegisterShop extends RegisterEvent {
-  const RegisterShop(this.formdata);
+  const RegisterShop(this.formdata, this.status);
 
   final Object formdata;
+  final String status;
 
   @override
-  List<Object> get props => [formdata];
+  List<Object> get props => [formdata, status];
 }

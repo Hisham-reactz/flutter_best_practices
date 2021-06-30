@@ -25,8 +25,13 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
     getInputs(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     double height(BuildContext context, double height) =>
         context.heightPct(height);
     double width(BuildContext context, double width) => context.widthPct(width);
@@ -56,7 +61,7 @@ class _RegisterViewState extends State<RegisterView> {
                 buildWhen: (previous, current) =>
                     previous.image1 != current.image1 ||
                     previous.image2 != current.image2 ||
-                    previous.formdata != current.formdata,
+                    previous.status != current.status,
                 builder: (context, state) {
                   return Column(mainAxisSize: MainAxisSize.max, children: [
                     Align(
@@ -99,23 +104,34 @@ class _RegisterViewState extends State<RegisterView> {
                                 child: Form(
                                   key: formKey,
                                   child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                            imageInput(context, state),
-                                            SizedBox(
-                                              height: context.heightPct(.03),
-                                            )
-                                          ] +
-                                          inputList +
-                                          [
-                                            regButton(context,
-                                                formKey as GlobalKey<FormState>)
-                                          ]),
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                          imageInput(context, state),
+                                          SizedBox(
+                                            height: context.heightPct(.03),
+                                          )
+                                        ] +
+                                        inputList +
+                                        [
+                                          regButton(
+                                              context,
+                                              formKey as GlobalKey<FormState>,
+                                              state)
+                                        ] +
+                                        statusMsg(state, context),
+                                  ),
                                 ))))
                   ]);
                 }),
           ),
         ));
+  }
+
+  List<Widget> statusMsg(RegisterState state, BuildContext context) {
+    if (['timeout', 'register_true', 'register_false'].contains(state.status)) {
+      return [SizedBox(height: context.heightPct(.01)), Text(state.status)];
+    }
+    return [];
   }
 }

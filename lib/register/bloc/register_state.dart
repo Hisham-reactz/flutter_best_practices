@@ -2,25 +2,25 @@ part of 'register_bloc.dart';
 
 class RegisterState extends Equatable {
   const RegisterState(
-      {this.name = '',
+      {this.status = '',
       this.image1 = '',
       this.image2 = '',
       this.formdata = ('')});
 
-  final String name;
+  final String status;
   final String image1;
   final String image2;
   final Object formdata;
 
   RegisterState copyWith(
-      {String? name, String? image1, String? image2, Object? formdata}) {
+      {String? status, String? image1, String? image2, Object? formdata}) {
     return RegisterState(
-        name: name ?? this.name,
+        status: status ?? this.status,
         formdata: formdata ?? this.formdata,
         image1: image1 ?? this.image1,
         image2: image2 ?? this.image2);
   }
 
   @override
-  List<Object> get props => [name, image1, image2, formdata];
+  List<Object> get props => [status, image1, image2, formdata];
 }
