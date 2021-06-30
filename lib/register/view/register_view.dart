@@ -29,7 +29,6 @@ class _RegisterViewState extends State<RegisterView> {
     getInputs(context);
     double height(BuildContext context, double height) =>
         context.heightPct(height);
-
     double width(BuildContext context, double width) => context.widthPct(width);
     return MaterialApp(
         title: 'Register your shop',
@@ -101,10 +100,8 @@ class _RegisterViewState extends State<RegisterView> {
                                     ] +
                                     inputList +
                                     [
-                                      formKey != null
-                                          ? regButton(context,
-                                              formKey as GlobalKey<FormState>)
-                                          : const SizedBox.shrink()
+                                      regButton(context,
+                                          formKey as GlobalKey<FormState>)
                                     ]),
                           )))),
             ]),
