@@ -8,11 +8,24 @@ part 'widgets/register_buttons.dart';
 part 'widgets/register_form_inputs.dart';
 part 'widgets/register_image_input.dart';
 
-class RegisterView extends StatelessWidget {
+class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
+
+  @override
+  _RegisterViewState createState() => _RegisterViewState();
+}
+
+class _RegisterViewState extends State<RegisterView> {
+  GlobalKey? formKey;
+
+  @override
+  void initState() {
+    super.initState();
+    formKey = GlobalKey<FormState>();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
     getInputs(context);
     double height(BuildContext context, double height) =>
         context.heightPct(height);
@@ -77,7 +90,7 @@ class RegisterView extends StatelessWidget {
                       child: Padding(
                           padding: EdgeInsets.all(context.diagonalInches * 4),
                           child: Form(
-                            key: formKey,
+                            // key: formKey,
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -87,7 +100,12 @@ class RegisterView extends StatelessWidget {
                                       )
                                     ] +
                                     inputList +
-                                    [regButton(context, formKey)]),
+                                    [
+                                      formKey != null
+                                          ? regButton(context,
+                                              formKey as GlobalKey<FormState>)
+                                          : const SizedBox.shrink()
+                                    ]),
                           )))),
             ]),
           ),
