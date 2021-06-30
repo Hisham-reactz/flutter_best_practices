@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_best_practices/register/register.dart';
+import 'package:flutter_best_practices/home/home.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sized_context/sized_context.dart';
 
@@ -17,11 +17,11 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _openMyPage() async {
-      await Navigator.push<void>(
+      await Navigator.pushReplacement(
         context,
         MaterialPageRoute<void>(
           builder: (BuildContext context) {
-            return const RegisterPage();
+            return const HomePage();
           },
         ),
       );
