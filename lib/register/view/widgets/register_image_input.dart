@@ -8,8 +8,7 @@ Widget imageInput(BuildContext context) {
           previous.image2 != current.image2,
       builder: (context, state) {
         return Container(
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          child: Row(children: [
             state.image1.isEmpty
                 ? Expanded(
                     flex: 1,
@@ -17,19 +16,16 @@ Widget imageInput(BuildContext context) {
                         onPressed: () async {
                           await _picker
                               .getImage(source: ImageSource.gallery)
-                              .then((value) =>
-                                  // value!.readAsBytes().then((value) => )
-
-                                  context.read<RegisterBloc>().add(ImageChanged(
-                                        value!.path,
-                                        state.image2.isNotEmpty
-                                            ? state.image2
-                                            : '',
-                                      )));
+                              .then((value) => context
+                                  .read<RegisterBloc>()
+                                  .add(ImageChanged(
+                                    value!.path,
+                                    state.image2.isNotEmpty ? state.image2 : '',
+                                  )));
                         },
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.add_a_photo_outlined,
-                          size: 37,
+                          size: context.diagonalPx / 25,
                         )))
                 : Expanded(
                     flex: 1,
@@ -64,26 +60,28 @@ Widget imageInput(BuildContext context) {
                                           : '',
                                       value!.path)));
                         },
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.add_a_photo_outlined,
-                          size: 37,
+                          size: context.diagonalPx / 25,
                         )))
-                : Stack(children: [
-                    Image.file(
-                      File(state.image2),
-                      fit: BoxFit.contain,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        context.read<RegisterBloc>().add(ImageChanged(
-                            state.image1.isNotEmpty ? state.image1 : '', ''));
-                      },
-                      icon: const Icon(
-                        Icons.close,
-                        color: Colors.orangeAccent,
+                : Expanded(
+                    flex: 1,
+                    child: Stack(children: [
+                      Image.file(
+                        File(state.image2),
+                        fit: BoxFit.contain,
                       ),
-                    )
-                  ]),
+                      IconButton(
+                        onPressed: () {
+                          context.read<RegisterBloc>().add(ImageChanged(
+                              state.image1.isNotEmpty ? state.image1 : '', ''));
+                        },
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.orangeAccent,
+                        ),
+                      )
+                    ])),
           ]),
           height: context.heightPct(0.2),
           decoration: const BoxDecoration(
