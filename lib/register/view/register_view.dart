@@ -52,39 +52,40 @@ class _RegisterViewState extends State<RegisterView> {
             centerTitle: true,
           ),
           body: SingleChildScrollView(
-            child: Column(mainAxisSize: MainAxisSize.max, children: [
-              Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    color: const Color(0xFF1A3B68),
-                    height: height(context, .10),
-                    child: Padding(
-                        padding: EdgeInsets.only(left: width(context, .01)),
-                        child: ListTile(
-                          title: const Text(
-                            'Leading',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          subtitle: Text(
-                            'Register Your Shop',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: context.diagonalInches * 3),
-                          ),
-                          trailing: const IconButton(
-                              onPressed: null,
-                              icon: Icon(
-                                Icons.search,
-                                color: Colors.white,
+            child: BlocBuilder<RegisterBloc, RegisterState>(
+                buildWhen: (previous, current) =>
+                    previous.image1 != current.image1 ||
+                    previous.image2 != current.image2,
+                builder: (context, state) {
+                  return Column(mainAxisSize: MainAxisSize.max, children: [
+                    Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          color: const Color(0xFF1A3B68),
+                          height: height(context, .10),
+                          child: Padding(
+                              padding:
+                                  EdgeInsets.only(left: width(context, .01)),
+                              child: ListTile(
+                                title: const Text(
+                                  'Leading',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                subtitle: Text(
+                                  'Register Your Shop',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: context.diagonalInches * 3),
+                                ),
+                                trailing: const IconButton(
+                                    onPressed: null,
+                                    icon: Icon(
+                                      Icons.search,
+                                      color: Colors.white,
+                                    )),
                               )),
                         )),
-                  )),
-              BlocBuilder<RegisterBloc, RegisterState>(
-                  buildWhen: (previous, current) =>
-                      previous.image1 != current.image1 ||
-                      previous.image2 != current.image2,
-                  builder: (context, state) {
-                    return Padding(
+                    Padding(
                         padding: EdgeInsets.all(context.diagonalInches * 2),
                         child: Material(
                             borderRadius: BorderRadius.circular(10),
@@ -110,9 +111,9 @@ class _RegisterViewState extends State<RegisterView> {
                                             regButton(context,
                                                 formKey as GlobalKey<FormState>)
                                           ]),
-                                ))));
-                  }),
-            ]),
+                                ))))
+                  ]);
+                }),
           ),
         ));
   }
