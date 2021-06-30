@@ -23,9 +23,8 @@ Widget regButton(
             var validated = key.currentState!.validate();
             if (validated) {
               key.currentState!.save();
-              context
-                  .read<RegisterBloc>()
-                  .add(RegisterShop((inputValues), 'pending'));
+              context.read<RegisterBloc>().add(RegisterShop(
+                  (inputValues), 'pending', state.image1, state.image2));
             }
           },
         );

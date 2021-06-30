@@ -47,7 +47,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterShop event,
     RegisterState state,
   ) async* {
-    dynamic formdata = event.formdata;
+    var formdata = event.formdata;
+    var images = [event.image1, event.image2];
 
     yield state.copyWith(status: 'pending');
     try {
@@ -56,7 +57,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       if (_timer != null && _timer!.isActive == true) {
         yield state.copyWith(status: 'timeout');
       } else {
-        await _regModel.register(formdata: formdata as Object);
+        await _regModel.register(formdata: formdata, images: images);
         dynamic _statr = await _regModel.status();
         yield state.copyWith(status: 'register_$_statr');
       }

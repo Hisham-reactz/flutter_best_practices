@@ -3,11 +3,10 @@ import 'dart:async';
 class RegModel {
   bool _regStatus = false;
 
-  Future<void> register({
-    required Object formdata,
-  }) async {
+  Future<void> register(
+      {required Object formdata, required List images}) async {
     await Future.delayed(const Duration(seconds: 2), () {
-      setReg(formdata != (''));
+      setReg(formdata != ('') && images.isNotEmpty);
     });
   }
 
