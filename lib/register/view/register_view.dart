@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_best_practices/register/bloc/register_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

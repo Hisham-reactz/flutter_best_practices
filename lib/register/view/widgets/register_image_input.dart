@@ -3,12 +3,14 @@ part of '../register_view.dart';
 Widget imageInput(BuildContext context) {
   final _picker = ImagePicker();
   return BlocBuilder<RegisterBloc, RegisterState>(
-      buildWhen: (previous, current) => previous.image1 != current.image1,
+      buildWhen: (previous, current) =>
+          previous.image1 != current.image1 ||
+          previous.image2 != current.image2,
       builder: (context, state) {
         return Container(
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            state.image1 == null
+            state.image1.isEmpty
                 ? Expanded(
                     flex: 1,
                     child: IconButton(
@@ -19,10 +21,10 @@ Widget imageInput(BuildContext context) {
                                   // value!.readAsBytes().then((value) => )
 
                                   context.read<RegisterBloc>().add(ImageChanged(
-                                        File(value!.path),
-                                        state.image2 == null
-                                            ? File(value.path)
-                                            : state.image2 as File,
+                                        value!.path,
+                                        state.image2.isNotEmpty
+                                            ? state.image2
+                                            : '',
                                       )));
                         },
                         icon: const Icon(
@@ -31,14 +33,12 @@ Widget imageInput(BuildContext context) {
                         )))
                 : Expanded(
                     flex: 1,
-                    child: state.image1 == null
-                        ? Container()
-                        : Image.file(
-                            state.image1 as File,
-                            fit: BoxFit.contain,
-                          )),
+                    child: Image.file(
+                      File(state.image1),
+                      fit: BoxFit.contain,
+                    )),
             const VerticalDivider(),
-            state.image2 == null
+            state.image2.isEmpty
                 ? Expanded(
                     flex: 1,
                     child: IconButton(
@@ -47,21 +47,19 @@ Widget imageInput(BuildContext context) {
                               .getImage(source: ImageSource.gallery)
                               .then((value) => context.read<RegisterBloc>().add(
                                   ImageChanged(
-                                      state.image1 == null
-                                          ? File(value!.path)
-                                          : state.image1 as File,
-                                      File(value!.path))));
+                                      state.image1.isNotEmpty
+                                          ? state.image1
+                                          : '',
+                                      value!.path)));
                         },
                         icon: const Icon(
                           Icons.add_a_photo_outlined,
                           size: 37,
                         )))
-                : state.image2 == null
-                    ? Container()
-                    : Image.file(
-                        state.image2 as File,
-                        fit: BoxFit.contain,
-                      ),
+                : Image.file(
+                    File(state.image2),
+                    fit: BoxFit.contain,
+                  ),
           ]),
           height: context.heightPct(0.2),
           decoration: const BoxDecoration(

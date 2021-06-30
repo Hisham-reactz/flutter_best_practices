@@ -1,13 +1,13 @@
 part of 'register_bloc.dart';
 
 class RegisterState extends Equatable {
-  const RegisterState({this.name = '', this.image1, this.image2});
+  const RegisterState({this.name = '', this.image1 = '', this.image2 = ''});
 
   final String name;
-  final File? image1;
-  final File? image2;
+  final String image1;
+  final String image2;
 
-  RegisterState copyWith({String? name, File? image2, File? image1}) {
+  RegisterState copyWith({String? name, String? image1, String? image2}) {
     return RegisterState(
         name: name ?? this.name,
         image1: image1 ?? this.image1,
@@ -15,7 +15,5 @@ class RegisterState extends Equatable {
   }
 
   @override
-  List<Object> get props => [
-        name,
-      ];
+  List<Object> get props => [name, image1, image2];
 }

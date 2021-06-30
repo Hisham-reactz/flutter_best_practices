@@ -1,12 +1,10 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 part 'register_state.dart';
 part 'register_event.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  RegisterBloc() : super(const RegisterState());
+  RegisterBloc() : super(const RegisterState(image1: '', image2: ''));
   @override
   Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
     if (event is ImageChanged) {
