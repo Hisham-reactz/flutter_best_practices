@@ -32,6 +32,10 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    void _popz() {
+      Navigator.pop(context, true); // dialog returns true
+    }
+
     double height(BuildContext context, double height) =>
         context.heightPct(height);
     double width(BuildContext context, double width) => context.widthPct(width);
@@ -40,9 +44,7 @@ class _RegisterViewState extends State<RegisterView> {
         home: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: _popz,
                 icon: const Icon(
                   Icons.arrow_back,
                   color: Colors.white,
@@ -63,6 +65,9 @@ class _RegisterViewState extends State<RegisterView> {
                     previous.image2 != current.image2 ||
                     previous.status != current.status,
                 builder: (context, state) {
+                  if (state.status == 'register_true') {
+                    Future.delayed(Duration.zero, _popz);
+                  }
                   return Column(mainAxisSize: MainAxisSize.max, children: [
                     Align(
                         alignment: Alignment.topCenter,
