@@ -16,7 +16,7 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  GlobalKey? formKey;
+  GlobalKey<FormState>? formKey;
 
   @override
   void initState() {
@@ -90,7 +90,7 @@ class _RegisterViewState extends State<RegisterView> {
                       child: Padding(
                           padding: EdgeInsets.all(context.diagonalInches * 4),
                           child: Form(
-                            // key: formKey,
+                            key: formKey,
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
