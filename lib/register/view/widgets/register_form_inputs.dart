@@ -15,6 +15,7 @@ List<String> inputs = [
   'About Shop',
 ];
 List<Widget> inputList = [];
+List<Object> inputValues = [];
 
 Widget textInput(dynamic data) {
   return TextFormField(
@@ -36,6 +37,8 @@ Widget textInput(dynamic data) {
       if (value == null || value.isEmpty) {
         return 'Please enter $data';
       }
+      inputValues
+          .add({data.toString().replaceAll(' ', '').toLowerCase(): value});
       return null;
     },
     obscureText: data == 'Password' || data == 'Password Confirmation',

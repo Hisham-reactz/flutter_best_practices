@@ -18,7 +18,10 @@ Widget regButton(BuildContext context, GlobalKey<FormState> key) {
     child: const Text('Sign Up'),
     onPressed: () {
       var validated = key.currentState!.validate();
-      if (validated) {}
+      if (validated) {
+        key.currentState!.save();
+        context.read<RegisterBloc>().add(RegisterShop(inputValues));
+      }
     },
   );
 }

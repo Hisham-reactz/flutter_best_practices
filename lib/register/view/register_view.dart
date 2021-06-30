@@ -55,7 +55,8 @@ class _RegisterViewState extends State<RegisterView> {
             child: BlocBuilder<RegisterBloc, RegisterState>(
                 buildWhen: (previous, current) =>
                     previous.image1 != current.image1 ||
-                    previous.image2 != current.image2,
+                    previous.image2 != current.image2 ||
+                    previous.formdata != current.formdata,
                 builder: (context, state) {
                   return Column(mainAxisSize: MainAxisSize.max, children: [
                     Align(
