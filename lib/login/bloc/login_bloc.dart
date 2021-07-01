@@ -1,16 +1,18 @@
 import 'dart:async';
+
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../data/auth.dart';
+
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc({required AuthModel authModel})
-      : _authenticationModel = authModel,
+  LoginBloc({required AuthenticationRepository authenticationRepository})
+      : _authenticationRepository = authenticationRepository,
         super(const LoginState());
 
-  final AuthModel _authenticationModel;
+  final AuthenticationRepository _authenticationRepository;
   Timer? _timer;
   final _timeout = const Duration(minutes: 1);
   int _i = 0;
@@ -70,12 +72,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if (_timer != null && _timer!.isActive == true) {
           yield state.copyWith(status: 'timeout');
         } else {
-          await _authenticationModel.logIn(
+          await _authenticationRepository.logIn(
             username: state.username,
             password: state.password,
           );
-          dynamic _statr = await _authenticationModel.status();
-          yield state.copyWith(status: 'login_$_statr');
+          var _statr = _authenticationRepository.status;
+          var _statz = 'false';
+
+          await _statr
+              .contains(AuthenticationStatus.authenticated)
+              .then((value) => _statz = value.toString());
+
+          yield state.copyWith(status: 'login_$_statz');
         }
       } on Exception catch (_) {
         yield state.copyWith(status: 'false');

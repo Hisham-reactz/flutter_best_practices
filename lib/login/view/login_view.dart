@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_best_practices/home/home.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sized_context/sized_context.dart';
 
@@ -16,16 +14,16 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _openMyPage() async {
-      await Navigator.pushReplacement(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) {
-            return const HomePage();
-          },
-        ),
-      );
-    }
+    // void _openMyPage() async {
+    //   await Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute<void>(
+    //       builder: (BuildContext context) {
+    //         return const HomePage();
+    //       },
+    //     ),
+    //   );
+    // }
 
     double height(BuildContext context, double height) =>
         context.heightPct(height);
@@ -89,8 +87,6 @@ class LoginForm extends StatelessWidget {
                             ..showSnackBar(
                               SnackBar(content: Text(state.status)),
                             );
-                        } else if (state.status == 'login_true') {
-                          Future.delayed(Duration.zero, _openMyPage);
                         }
                       },
                       child: Padding(

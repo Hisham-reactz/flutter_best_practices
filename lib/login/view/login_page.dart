@@ -1,7 +1,8 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../bloc/login_bloc.dart';
-import '../data/auth.dart';
 import 'login_view.dart';
 
 class LoginPage extends StatelessWidget {
@@ -10,8 +11,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var authrepo = AuthenticationRepository();
     return BlocProvider(
-      create: (_) => LoginBloc(authModel: AuthModel()),
+      create: (_) => LoginBloc(authenticationRepository: authrepo),
       child: const LoginForm(),
     );
   }
