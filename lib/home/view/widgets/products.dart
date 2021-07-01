@@ -38,8 +38,6 @@ class ProductListing extends StatelessWidget {
                               )),
                         )),
                   )),
-              const Padding(
-                  child: SizedBox.shrink(), padding: EdgeInsets.all(0))
             ] +
             ['A', 'B', 'C', 'D'].map<Widget>((e) => product(context)).toList());
   }
