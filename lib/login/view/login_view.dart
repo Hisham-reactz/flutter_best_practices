@@ -79,62 +79,55 @@ class LoginForm extends StatelessWidget {
                   SizedBox(
                     height: height(context, .03),
                   ),
-                  BlocBuilder<LoginBloc, LoginState>(
-                      buildWhen: (previous, current) =>
-                          previous.status != current.status,
-                      builder: (context, state) {
-                        if (state.status == 'login_true') {
+                  BlocListener<LoginBloc, LoginState>(
+                      listener: (context, state) {
+                        if (['timeout', 'login_false'].contains(state.status)) {
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(
+                              SnackBar(content: Text(state.status)),
+                            );
+                        } else if (state.status == 'login_true') {
                           Future.delayed(Duration.zero, _openMyPage);
                         }
-                        return Padding(
-                            padding: EdgeInsets.only(
-                                left: width(context, .03),
-                                right: width(context, .03)),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                    const UsernameInput(),
-                                    Padding(
-                                        padding: EdgeInsets.all(
-                                            context.diagonalPx / 100)),
-                                    const PasswordInput(),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                              width: width(context, .1),
-                                              child: Checkbox(
-                                                checkColor: Colors.white,
-                                                fillColor: MaterialStateProperty
-                                                    .resolveWith(getColor),
-                                                value: rememberUser,
-                                                onChanged: (bool? value) {
-                                                  rememberUser = value!;
-                                                },
-                                              )),
-                                          SizedBox(
-                                              width: width(context, .3),
-                                              child: const Text('Remember |')),
-                                          SizedBox(
-                                              width: width(context, .4),
-                                              child: TextButton(
-                                                  onPressed: () {},
-                                                  child: const Text(
-                                                      'Forgot Password')))
-                                        ]),
-                                    const LoginButton(),
-                                  ] +
-                                  statusMsg(state, context),
-                            ));
-                      })
+                      },
+                      child: Padding(
+                          padding: EdgeInsets.only(
+                              left: width(context, .03),
+                              right: width(context, .03)),
+                          child:
+                              Column(mainAxisSize: MainAxisSize.max, children: [
+                            const UsernameInput(),
+                            Padding(
+                                padding:
+                                    EdgeInsets.all(context.diagonalPx / 100)),
+                            const PasswordInput(),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                      width: width(context, .1),
+                                      child: Checkbox(
+                                        checkColor: Colors.white,
+                                        fillColor:
+                                            MaterialStateProperty.resolveWith(
+                                                getColor),
+                                        value: rememberUser,
+                                        onChanged: (bool? value) {
+                                          rememberUser = value!;
+                                        },
+                                      )),
+                                  SizedBox(
+                                      width: width(context, .3),
+                                      child: const Text('Remember |')),
+                                  SizedBox(
+                                      width: width(context, .4),
+                                      child: TextButton(
+                                          onPressed: () {},
+                                          child: const Text('Forgot Password')))
+                                ]),
+                            const LoginButton(),
+                          ])))
                 ]))));
-  }
-
-  List<Widget> statusMsg(LoginState state, BuildContext context) {
-    if (['timeout', 'login_true', 'login_false'].contains(state.status)) {
-      return [SizedBox(height: context.heightPct(.01)), Text(state.status)];
-    }
-    return [];
   }
 }
