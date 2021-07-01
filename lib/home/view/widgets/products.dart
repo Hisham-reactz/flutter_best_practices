@@ -15,7 +15,7 @@ class ProductListing extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   child: Container(
                     color: const Color(0xFF1A3B68),
-                    height: height(context, .10),
+                    height: height(context, .13),
                     child: Padding(
                         padding: EdgeInsets.only(left: width(context, .01)),
                         child: ListTile(
@@ -27,7 +27,7 @@ class ProductListing extends StatelessWidget {
                             'Upcoming Auctions',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: context.diagonalInches * 3),
+                                fontSize: context.diagonalPx / 35),
                           ),
                           trailing: const IconButton(
                               onPressed: null,

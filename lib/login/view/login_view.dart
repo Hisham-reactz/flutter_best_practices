@@ -73,11 +73,11 @@ class LoginForm extends StatelessWidget {
                     'AUCTION TITLE',
                     style: TextStyle(
                         color: const Color(0xFF1A3B68),
-                        fontSize: context.diagonalInches * 3),
+                        fontSize: context.diagonalPx / 35),
                   ),
                   const Text('SUB TITLE'),
                   SizedBox(
-                    height: height(context, .05),
+                    height: height(context, .03),
                   ),
                   BlocBuilder<LoginBloc, LoginState>(
                       buildWhen: (previous, current) =>
@@ -96,7 +96,7 @@ class LoginForm extends StatelessWidget {
                                     const UsernameInput(),
                                     Padding(
                                         padding: EdgeInsets.all(
-                                            context.diagonalInches * 1.5)),
+                                            context.diagonalPx / 100)),
                                     const PasswordInput(),
                                     Row(
                                         mainAxisAlignment:

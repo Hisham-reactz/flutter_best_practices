@@ -73,7 +73,7 @@ class _RegisterViewState extends State<RegisterView> {
                         alignment: Alignment.topCenter,
                         child: Container(
                           color: const Color(0xFF1A3B68),
-                          height: height(context, .10),
+                          height: height(context, .13),
                           child: Padding(
                               padding:
                                   EdgeInsets.only(left: width(context, .01)),
@@ -86,7 +86,7 @@ class _RegisterViewState extends State<RegisterView> {
                                   'Register Your Shop',
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: context.diagonalInches * 3),
+                                      fontSize: context.diagonalPx / 35),
                                 ),
                                 trailing: const IconButton(
                                     onPressed: null,
@@ -97,7 +97,7 @@ class _RegisterViewState extends State<RegisterView> {
                               )),
                         )),
                     Padding(
-                        padding: EdgeInsets.all(context.diagonalInches * 2),
+                        padding: EdgeInsets.all(context.diagonalPx / 75),
                         child: Material(
                             borderRadius: BorderRadius.circular(10),
                             type: MaterialType.card,
@@ -105,7 +105,7 @@ class _RegisterViewState extends State<RegisterView> {
                             elevation: 3,
                             child: Padding(
                                 padding:
-                                    EdgeInsets.all(context.diagonalInches * 4),
+                                    EdgeInsets.all(context.diagonalPx / 37),
                                 child: Form(
                                   key: formKey,
                                   child: Column(
