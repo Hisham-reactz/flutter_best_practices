@@ -80,6 +80,8 @@ class LoginForm extends StatelessWidget {
                     height: height(context, .03),
                   ),
                   BlocListener<LoginBloc, LoginState>(
+                      listenWhen: (previous, current) =>
+                          previous.status != current.status,
                       listener: (context, state) {
                         if (['timeout', 'login_false'].contains(state.status)) {
                           ScaffoldMessenger.of(context)
