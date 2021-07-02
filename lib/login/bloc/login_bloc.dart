@@ -28,7 +28,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   StreamSubscription<AuthenticationStatus>? listenz;
-  late Stream<AuthenticationStatus> _statr;
+  Stream<AuthenticationStatus>? _statr;
   AuthenticationStatus? _stat;
 
   @override
@@ -63,13 +63,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Stream<LoginState> _mapLoginSubmittedToState(
-    LoginSubmitted event,
-    LoginState state,
-  ) async* {
+      LoginSubmitted event, LoginState state) async* {
     if (state.password.isNotEmpty && state.username.isNotEmpty) {
       yield state.copyWith(status: 'pending');
       try {
-        // DUMMY API TO BE REPLACED BY REAL ONE IN _authenticationModel
+        // DUMMY API TO BE REPLACED BY REAL ONE IN _authRepo
         //Login API debounce // *#$@$#stream*
         _i++;
         if (_i > 5) startTimeout();
@@ -80,25 +78,23 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             username: state.username,
             password: state.password,
           );
-
           _statr = _authenticationRepository.status;
-          listenz ??= _statr.listen((AuthenticationStatus event) {
+
+          listenz ??= _statr!.listen((AuthenticationStatus event) {
             _stat = event;
           });
-
           var statz = _stat == AuthenticationStatus.authenticated;
 
-          yield state.copyWith(status: 'login_$statz');
           if (statz) await listenz!.cancel();
+          yield state.copyWith(status: 'login_$statz');
+
           //it takes two tries to change the stat dono why
         }
       } on Exception catch (_) {
         yield state.copyWith(status: 'false');
-        // await listenz!.cancel();
       }
     } else {
       yield state.copyWith(status: 'validation_error');
-      // await listenz!.cancel();
     }
   }
 }
