@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_best_practices/authentication/authentication.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sized_context/sized_context.dart';
 
@@ -87,6 +89,10 @@ class LoginForm extends StatelessWidget {
                             ..showSnackBar(
                               SnackBar(content: Text(state.status)),
                             );
+                        } else if (state.status == 'login_true') {
+                          context.read<AuthenticationBloc>().add(
+                              const AuthenticationStatusChanged(
+                                  AuthenticationStatus.authenticated));
                         }
                       },
                       child: Padding(

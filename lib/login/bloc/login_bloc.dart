@@ -27,6 +27,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     return _timer;
   }
 
+  StreamSubscription<AuthenticationStatus>? listenz;
+  late Stream<AuthenticationStatus> _statr;
+  AuthenticationStatus? _stat;
+
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is LoginUsernameChanged) {
@@ -76,20 +80,25 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             username: state.username,
             password: state.password,
           );
-          var _statr = _authenticationRepository.status;
-          var _statz = 'false';
 
-          await _statr
-              .contains(AuthenticationStatus.authenticated)
-              .then((value) => _statz = value.toString());
+          _statr = _authenticationRepository.status;
+          listenz ??= _statr.listen((AuthenticationStatus event) {
+            _stat = event;
+          });
 
-          yield state.copyWith(status: 'login_$_statz');
+          var statz = _stat == AuthenticationStatus.authenticated;
+
+          yield state.copyWith(status: 'login_$statz');
+          if (statz) await listenz!.cancel();
+          //it takes two tries to change the stat dono why
         }
       } on Exception catch (_) {
         yield state.copyWith(status: 'false');
+        // await listenz!.cancel();
       }
     } else {
       yield state.copyWith(status: 'validation_error');
+      // await listenz!.cancel();
     }
   }
 }
