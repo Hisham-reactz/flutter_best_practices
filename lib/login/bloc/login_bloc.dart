@@ -10,11 +10,17 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({required AuthenticationRepository authenticationRepository})
       : _authenticationRepository = authenticationRepository,
-        super(const LoginState());
+        super(const LoginState()) {
+    listenz = _authenticationRepository.status.listen((event) {
+      _stat = event;
+    });
+  }
 
   final AuthenticationRepository _authenticationRepository;
-  Timer? _timer;
   final _timeout = const Duration(minutes: 1);
+  dynamic listenz;
+  dynamic _stat;
+  Timer? _timer;
   int _i = 0;
 
   void handleTimeout() {
@@ -26,10 +32,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     _timer = Timer(_timeout, handleTimeout);
     return _timer;
   }
-
-  StreamSubscription<AuthenticationStatus>? listenz;
-  Stream<AuthenticationStatus>? _statr;
-  AuthenticationStatus? _stat;
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
@@ -78,17 +80,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             username: state.username,
             password: state.password,
           );
-          _statr = _authenticationRepository.status;
 
-          listenz ??= _statr!.listen((AuthenticationStatus event) {
-            _stat = event;
-          });
           var statz = _stat == AuthenticationStatus.authenticated;
 
           if (statz) await listenz!.cancel();
           yield state.copyWith(status: 'login_$statz');
 
-          //it takes two tries to change the stat dono why
+          //it takes two tries to change the stat still dunno why
         }
       } on Exception catch (_) {
         yield state.copyWith(status: 'false');
