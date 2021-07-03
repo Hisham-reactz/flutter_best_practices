@@ -10,16 +10,10 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({required AuthenticationRepository authenticationRepository})
       : _authenticationRepository = authenticationRepository,
-        super(const LoginState()) {
-    listenz = _authenticationRepository.status.listen((event) {
-      _stat = event;
-    });
-  }
+        super(const LoginState());
 
   final AuthenticationRepository _authenticationRepository;
   final _timeout = const Duration(minutes: 1);
-  dynamic listenz;
-  dynamic _stat;
   Timer? _timer;
   int _i = 0;
 
@@ -81,12 +75,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             password: state.password,
           );
 
-          var statz = _stat == AuthenticationStatus.authenticated;
+          var statz = state.password.length > 5;
 
-          if (statz) await listenz!.cancel();
           yield state.copyWith(status: 'login_$statz');
-
-          //it takes two tries to change the stat still dunno why
         }
       } on Exception catch (_) {
         yield state.copyWith(status: 'false');

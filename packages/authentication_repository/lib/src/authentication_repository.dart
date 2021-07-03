@@ -15,11 +15,8 @@ class AuthenticationRepository {
     required String username,
     required String password,
   }) async {
-    await Future.delayed(
-        const Duration(milliseconds: 300),
-        () => _controller.add(password.length > 5
-            ? AuthenticationStatus.authenticated
-            : AuthenticationStatus.unauthenticated));
+    await Future.delayed(const Duration(milliseconds: 300),
+        () => _controller.add(AuthenticationStatus.authenticated));
   }
 
   void logOut() {
